@@ -34,8 +34,12 @@ class _UTipState extends State<UTip> {
       appBar: AppBar(
         title:const Text('UTip'),
       ),
-      body: const Center(
-        
+      body: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children:
+         [
+          Text("hi world")
+         ],
       ),
     );
   }
