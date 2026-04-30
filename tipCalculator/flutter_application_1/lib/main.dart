@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/Pernsol_counter.dart';
+import 'widgets/tipcluclotr.dart';
+import 'widgets/BillAmount.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -28,6 +30,8 @@ class UTip extends StatefulWidget {
 
 class _UTipState extends State<UTip> {
   int personsCount = 1;
+
+  double _tipprecentge = 0.0;
   void increasePersons() {
     setState(() {
       personsCount++;
@@ -80,7 +84,7 @@ class _UTipState extends State<UTip> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 12),
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(
@@ -90,17 +94,7 @@ class _UTipState extends State<UTip> {
               ),
               child: Column(
                 children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.attach_money),
-                      labelText: "Bill Amount",
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (String value) {
-                      print(value);
-                    },
-                  ),
+                  BillAmount(billAmount: '1000', onChanged: (String value) {  },),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Row(
@@ -113,24 +107,32 @@ class _UTipState extends State<UTip> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        PersnolalCount(personsCount: personsCount,onIncrease: increasePersons, onDecrease: decreasePersons),
-                      ],
-                      
-                    ),
-                    
-                  ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Tip",
-                          style: Theme.of(context).textTheme.titleMedium,
+                        PersnolalCount(
+                          personsCount: personsCount,
+                          onIncrease: increasePersons,
+                          onDecrease: decreasePersons,
                         ),
-                        Text("\$20.00",style: Theme.of(context).textTheme.titleMedium,)
                       ],
                     ),
-                    Text("25%",style: Theme.of(context).textTheme.titleLarge,),
-                    // Slider(value: 4.8, onChanged:)
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Tip",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Text(
+                        "\$20.00",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "${(_tipprecentge * 100).toStringAsFixed(1)}%",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  tipcaluctor(tipprecentge: _tipprecentge, onChanged: (value) { setState(() { _tipprecentge = value; }); }),
                 ],
               ),
             ),
@@ -140,5 +142,5 @@ class _UTipState extends State<UTip> {
     );
   }
 }
-
+ 
 
